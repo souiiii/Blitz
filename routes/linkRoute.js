@@ -1,5 +1,5 @@
 import Router from "express";
-import { authHard } from "../middlewares/auth";
+import { authHard } from "../middlewares/auth.js";
 const router = Router();
 
 router.get("/:link", async (req, res) => {});

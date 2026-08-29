@@ -1,4 +1,4 @@
-import { getUser } from "../services/auth";
+import { getUser } from "../services/auth.js";
 
 async function authSoft(req, res, next) {
   req.user = null;

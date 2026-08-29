@@ -6,6 +6,6 @@ export async function getUser(token) {
 
 export async function setUser(payload) {
   const secret = process.env.JWTSECRET;
-  const payload = jwt.sign(payload, secret);
-  return payload;
+  const token = jwt.sign(payload, secret);
+  return token;
 }

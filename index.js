@@ -7,7 +7,7 @@ import linkRoute from "./routes/linkRoute";
 import { authSoft } from "./middlewares/auth";
 
 const PORT = process.env.PORT || 8000;
-const path = process.env.MONGO_URI;
+const path = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/blitz";
 
 const app = express();
 

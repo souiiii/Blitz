@@ -2,11 +2,12 @@ import Router from "express";
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
 import { setUser } from "../services/auth.js";
+import validator from "validator";
 
 const router = Router();
 
 router.post("/signup", async (req, res) => {
-  const { email, password, name } = req.body;
+  let { email, password, name } = req.body;
 
   if (!email || !password || !name)
     return res.status(400).json({ err: "Invalid request" });
@@ -17,11 +18,11 @@ router.post("/signup", async (req, res) => {
   if (!validator.isEmail(email))
     return res.status(400).json({ err: "Invalid email format" });
 
-  const user = await User.find({ email });
+  const user = await User.findOne({ email });
 
   if (user) return res.status(400).json({ err: "User already exists" });
 
-  const hashedPass = bcrypt.hash(password, 10);
+  const hashedPass = await bcrypt.hash(password, 10);
 
   await User.create({ name, email, password: hashedPass });
 
@@ -29,16 +30,16 @@ router.post("/signup", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-  const { email, password } = req.body;
+  let { email, password } = req.body;
 
-  if (!email || !password || !name)
+  if (!email || !password)
     return res.status(400).json({ err: "Invalid request" });
 
   email = email.trim().toLowerCase();
   if (!validator.isEmail(email))
     return res.status(400).json({ err: "Invalid email format" });
 
-  const user = await User.find({ email });
+  const user = await User.findOne({ email });
 
   if (!user) return res.status(400).json({ err: "Account not found" });
 
@@ -50,7 +51,7 @@ router.post("/login", async (req, res) => {
     res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.production || false,
-      sameSite: none,
+      sameSite: "none",
     });
 
     return res.status(200).json({ msg: "logged in" });

@@ -2,6 +2,8 @@ import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 dotenv.config();
 import express from "express";
+import authRoute from "./routes/authRoute";
+import linkRoute from "./routes/linkRoute";
 
 const PORT = process.env.PORT || 8000;
 const path = process.env.MONGO_URI;

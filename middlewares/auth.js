@@ -1,3 +1,5 @@
+import { getUser } from "../services/auth";
+
 async function authSoft(req, res, next) {
   req.user = null;
   const token = req.cookies?.token;
@@ -5,7 +7,7 @@ async function authSoft(req, res, next) {
   if (!token) return next();
 
   try {
-    const user = getUser(token);
+    const user = await getUser(token);
     req.user = user;
     return next();
   } catch (err) {

@@ -19,3 +19,5 @@ async function authHard(req, res, next) {
 
   return next();
 }
+
+export { authHard, authSoft };
